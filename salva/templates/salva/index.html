@@ -1,0 +1,619 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<button onclick="showOneOfMany('pages', 'page1')">Area</button>
+<button onclick="showOneOfMany('pages', 'page2')">Trabajador</button>
+<button onclick="showOneOfMany('pages', 'page3')">Computadora</button>
+<button onclick="showOneOfMany('pages', 'page4')">Hardware</button>
+<button onclick="showOneOfMany('pages', 'page5')">Periferico</button>
+<button onclick="showOneOfMany('pages', 'page6')">Diferencias</button>
+<button onclick="showOneOfMany('pages', 'page7')">Programs</button>
+<button onclick="showOneOfMany('pages', 'page8')">Softwares</button>
+<div id="pages">
+    <div id="page1" class="d-flex justify-content-between gap-3">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Area {{Area.count}} <a href="{% url 'salva:save_area' %}">Salvar</a>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">cant_trabs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Area %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.cant_trabs}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Area {{S_Area.count}}
+                    <a href="{% url 'salva:rest_area' %}">restore</a>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">nombre</th>
+                        <th scope="col">cant_trabs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Area %}
+                    <tr>
+                        <th scope="row">{{i.pk}}</th>
+
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.cant_trabs}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page2" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Trabajador {{Trabajador.count}}
+                    <a href="{% url 'salva:save_trabs' %}">save</a>
+                </caption>
+
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">cargo</th>
+                        <th scope="col">area</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Trabajador %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.cargo}}</th>
+                        <th>{{i.area}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Trabajador {{S_Trabajador.count}}
+                    <a href="{% url 'salva:rest_trabs' %}">restore</a>
+
+                </caption>
+
+
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">nombre</th>
+                        <th scope="col">cargo</th>
+                        <th scope="col">area</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Trabajador %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.cargo}}</th>
+                        <th>{{i.area}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page3" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Computadora {{Computadora.count}}
+                    <a href="{% url 'salva:save_comp' %}">save</a>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">responsable</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">ip</th>
+                        <th scope="col">num_de_inventario</th>
+                        <th scope="col">sello_1</th>
+                        <th scope="col">sello_2</th>
+                        <th scope="col">cambios</th>
+                        <th scope="col">baja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Computadora %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.responsable}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.ip}}</th>
+                        <th>{{i.num_de_inventario}}</th>
+                        <th>{{i.sello_1}}</th>
+                        <th>{{i.sello_2}}</th>
+                        <th>{{i.cambios}}</th>
+                        <th>{{i.baja}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Computadora {{S_Computadora.count}}
+                    <a href="{% url 'salva:rest_comp' %}">restore</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">responsable</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">ip</th>
+                        <th scope="col">num_de_inventario</th>
+                        <th scope="col">sello_1</th>
+                        <th scope="col">sello_2</th>
+                        <th scope="col">cambios</th>
+                        <th scope="col">baja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Computadora %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.responsable}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.ip}}</th>
+                        <th>{{i.num_de_inventario}}</th>
+                        <th>{{i.sello_1}}</th>
+                        <th>{{i.sello_2}}</th>
+                        <th>{{i.cambios}}</th>
+                        <th>{{i.baja}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page4" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Hardware {{Hardware.count}}
+                    <a href="{% url 'salva:save_hard' %}">Save</a>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">computadora</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">fabricante</th>
+                        <th scope="col">modelo</th>
+                        <th scope="col">capacidad_gb</th>
+                        <th scope="col">velocidad</th>
+                        <th scope="col">num_de_serie</th>
+                        <th scope="col">baja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Hardware %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.fabricante}}</th>
+                        <th>{{i.modelo}}</th>
+                        <th>{{i.capacidad_gb}}</th>
+                        <th>{{i.velocidad}}</th>
+                        <th>{{i.num_de_serie}}</th>
+                        <th>{{i.baja}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Hardware {{S_Hardware.count}}
+                    <a href="{% url 'salva:rest_hard' %}">restore</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">computadora</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">fabricante</th>
+                        <th scope="col">modelo</th>
+                        <th scope="col">capacidad_gb</th>
+                        <th scope="col">velocidad</th>
+                        <th scope="col">num_de_serie</th>
+                        <th scope="col">baja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Hardware %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.fabricante}}</th>
+                        <th>{{i.modelo}}</th>
+                        <th>{{i.capacidad_gb}}</th>
+                        <th>{{i.velocidad}}</th>
+                        <th>{{i.num_de_serie}}</th>
+                        <th>{{i.baja}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page5" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">
+                    Periferico {{Periferico.count}}
+                    <a href="{% url 'salva:save_peri' %}">Save</a>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">computadora</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">fabricante</th>
+                        <th scope="col">modelo</th>
+                        <th scope="col">num_inventario</th>
+                        <th scope="col">num_de_serie</th>
+                        <th scope="col">baja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Periferico %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.fabricante}}</th>
+                        <th>{{i.modelo}}</th>
+                        <th>{{i.num_inventario}}</th>
+                        <th>{{i.num_de_serie}}</th>
+                        <th>{{i.baja}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Periferico {{S_Periferico.count}}
+                    <a href="{% url 'salva:rest_peri' %}">restore</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">computadora</th>
+                        <th scope="col">nombre</th>
+                        <th scope="col">fabricante</th>
+                        <th scope="col">modelo</th>
+                        <th scope="col">num_inventario</th>
+                        <th scope="col">num_de_serie</th>
+                        <th scope="col">baja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Periferico %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.nombre}}</th>
+                        <th>{{i.fabricante}}</th>
+                        <th>{{i.modelo}}</th>
+                        <th>{{i.num_inventario}}</th>
+                        <th>{{i.num_de_serie}}</th>
+                        <th>{{i.baja}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page6" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Diferencias {{Diferencias.count}}
+                    <a href="{% url 'salva:save_dife' %}">Save</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">computadora</th>
+                        <th scope="col">campo</th>
+                        <th scope="col">cambio</th>
+                        <th scope="col">fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Diferencias %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.campo}}</th>
+                        <th>{{i.cambio}}</th>
+                        <th>{{i.fecha}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Diferencias {{S_Diferencias.count}}
+                    <a href="{% url 'salva:rest_dife' %}">restore</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">computadora</th>
+                        <th scope="col">campo</th>
+                        <th scope="col">cambio</th>
+                        <th scope="col">fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Diferencias %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.campo}}</th>
+                        <th>{{i.cambio}}</th>
+                        <th>{{i.fecha}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page7" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Programs {{Programs.count}}
+                    <a href="{% url 'salva:save_prog' %}">save</a>
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Programs %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.nombre}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Programs {{S_Programs.count}}
+                    <a href="{% url 'salva:rest_prog' %}">restore</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Programs %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.nombre}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="page8" class="d-flex justify-content-between gap-3 d-none">
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Softwares {{Softwares.count}}
+                    <a href="{% url 'salva:save_soft' %}">save</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">computadora</th>
+                        <th scope="col">nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in Softwares %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.nombre}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive w-50">
+            <table class="table table-bordered">
+                <caption class="caption-top">Softwares {{S_Softwares.count}}
+                    <a href="{% url 'salva:rest_soft' %}">restore</a>
+
+                </caption>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+
+                        <th scope="col">computadora</th>
+                        <th scope="col">nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in S_Softwares %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+
+                        <th>{{i.computadora}}</th>
+                        <th>{{i.nombre}}</th>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>-----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'computadoras/js/utiles.js' %}"></script>
+{% endblock script %}

@@ -1,0 +1,320 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid" id="detalles">
+
+    <div class="d-flex justify-content-between mb-5">
+        <div class="d-flex  gap-3 ">
+            <a class="btn btn-outline-primary" href="{% url 'computadoras:index' %}">Atras</a>
+            <a href="{% url 'exporter:topdf' id %}" class="btn btn-outline-primary">Exportar</a>
+            <a href="{% url 'reparaciones:reparar' id %}" class="btn btn-outline-primary mx-auto">Reparar</a>
+        </div>
+
+        <div>
+            {% csrf_token %}
+            <button type="button" class="btn btn-outline-primary" id="btn_ping"><div class="spinner-grow spinner-grow-sm text-primary d-none" id="spinner" role="status">
+            </div>   <span>Ping</span>
+            </button>
+        </div>
+    </div>
+    <div class="container-fluid" id="cldm">
+        <div class="d-flex justify-content-evenly align-items-start">
+            <!-- Computadora -->
+            <div class="table-responsive ftab bg-light shadow mb-5">
+                <table class="table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                <div class="d-flex justify-content-between align-items-center px-2">
+                                    Computadora
+                                    <a href="{% url 'computadoras:upd_comp' comp.pk %}" title="Editar datos"
+                                        data-html2canvas-ignore class="btn btn-outline-primary btn-sm fs-6">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Responsable</th>
+                            <td>{{comp.responsable}}</td>
+                        </tr>
+                        <tr>
+                            <th>Direccion IP</th>
+                            <td>{{comp.ip}}</td>
+                        </tr>
+                        <tr>
+                            <th>Dominio</th>
+                            <td id="nombre_comp">{{comp.nombre}}</td>
+                        </tr>
+                        <tr>
+                            <th>Inventario</th>
+                            <td>{{comp.num_de_inventario}}</td>
+                        </tr>
+                        <tr>
+                            <th>Sello der</th>
+                            <td>{{comp.sello_1}}</td>
+                        </tr>
+                        <tr>
+                            <th>Sello izq</th>
+                            <td>{{comp.sello_2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- Programas -->
+            <div class="table-responsive ftab bg-light shadow mb-5">
+                <table class="table table-hover bg-light text-center">
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                <div class="d-flex justify-content-between align-items-center px-2">
+                                    Programas
+                                    <a href="{% url 'computadoras:add_prog' id %}" title="Agregar programa"
+                                        data-html2canvas-ignore class="btn btn-outline-primary btn-sm fs-6">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr data-html2canvas-ignore>
+                            <th>Nombre</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in prog %}
+                        <tr>
+                            <td>{{p.nombre}}</td>
+                            <td data-html2canvas-ignore><a href="{% url 'computadoras:upd_prog' p.pk id %}"
+                                    title="Editar"><i class="bi bi-pencil-square"></i></a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>----</td>
+                            <td>----</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <!-- Hardware -->
+            <div class="table-responsive ftab bg-light shadow mb-5">
+                <table class="table table-hover bg-light text-center">
+                    <thead>
+                        <tr>
+                            <th colspan="7">
+                                <div class="d-flex justify-content-between align-items-center px-2">
+                                    Hardware
+                                    <a href="{% url 'computadoras:add_hard' id %}" title="Agregar hardware"
+                                        data-html2canvas-ignore class="btn btn-outline-primary btn-sm fs-6">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fabricante</th>
+                            <th>Modelo</th>
+                            <th>Capacidad</th>
+                            <th>Velocidad</th>
+                            <th>Num. de serie</th>
+                            <th data-html2canvas-ignore>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in hard %}
+                        <tr>
+                            <td>{{h.nombre}}</td>
+                            <td>{{h.fabricante}}</td>
+                            <td>{{h.modelo}}</td>
+                            <td>{{h.capacidad_gb}}</td>
+                            <td>{{h.velocidad}}</td>
+                            <td>{{h.num_de_serie}}</td>
+                            <td data-html2canvas-ignore><a href="{% url 'computadoras:upd_hard' h.pk id %}"
+                                    title="Editar pieza"><i class="bi bi-pencil-square"></i></a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <!-- Perifericos -->
+            <div class="table-responsive ftab bg-light shadow mb-5">
+                <table class="table table-hover bg-light text-center">
+                    <thead>
+                        <tr>
+                            <th colspan="6">
+                                <div class="d-flex justify-content-between align-items-center px-2">
+                                    Perifericos
+                                    <a href="{% url 'computadoras:add_peri' id %}" title="Agregar periferico"
+                                        data-html2canvas-ignore class="btn btn-outline-primary btn-sm fs-6">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </a>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Fabricante</th>
+                            <th>Modelo</th>
+                            <th>Num. de inv</th>
+                            <th>Num. de serie</th>
+                            <th data-html2canvas-ignore>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in peri %}
+                        <tr>
+                            <td>{{p.nombre}}</td>
+                            <td>{{p.fabricante}}</td>
+                            <td>{{p.modelo}}</td>
+                            <td>{{p.num_inventario}}</td>
+                            <td>{{p.num_de_serie}}</td>
+                            <td data-html2canvas-ignore><a href="{% url 'computadoras:upd_peri' p.pk id %}"
+                                    title="Editar pieza"><i class="bi bi-pencil-square"></i></a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                            <td>----</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Cambios -->
+    {% if difs %}
+    <div class="d-flex justify-content-center">
+        <div class="table-responsive ftab bg-light shadow mb-5">
+            <table class="table table-hover bg-light  text-center">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center">
+                            Cambios
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Nuevo valor</th>
+                        <th>Detectado</th>
+                        <th>Borrar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in difs %}
+                    <tr>
+                        <td>{{p.campo}}</td>
+                        <td>{{p.cambio}}</td>
+                        <td>{{p.fecha}}</td>
+                        <td>
+                            <a href="{% url 'computadoras:del_dif' p.pk %}" title="Ignorar cambio"
+                                class="btn btn-outline-primary btn-sm me-2">Ignorar</a>
+                            <a href="{% url 'computadoras:del_dif' p.pk %}" title="Aplicar cambio"
+                                class="btn btn-outline-primary btn-sm">Aplicar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>----</td>
+                        <td>----</td>
+                        <td>----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'computadoras:del_all_difs' id %}" class="btn btn-outline-primary mx-auto">Ignorar
+                    todo</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    let btn_ping = document.getElementById("btn_ping");
+    btn_ping.addEventListener("click", (e) => {
+        document.getElementById("spinner").classList.remove("d-none");
+        fetch("{% url 'computadoras:ping' comp.ip %}", {
+            method: 'post',
+            headers: {
+                "X-CSRFToken": getCookie('csrftoken'),
+                // csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]')
+            }
+        }).then(response => response.text())
+            .then(data => {
+                // handle the response data
+                console.log(data);
+                btn_ping.classList.remove("btn-outline-primary")
+                btn_ping.classList.remove("btn-outline-success")
+                btn_ping.classList.remove("btn-outline-danger")
+                if (data == "Conectado") {
+                    btn_ping.classList.add("btn-outline-success")
+                } else {
+                    btn_ping.classList.add("btn-outline-danger")
+                }
+                btn_ping.setAttribute("title", data)
+                document.getElementById("spinner").classList.add("d-none");
+            });
+    })
+</script>
+{% endblock script %}
+<!-- // get CSRF token
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+// make a fetch request to the Django view
+fetch('{% url "computadoras:ping" ip %}', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+    },
+    body: JSON.stringify({
+        // data to send to the server
+    })
+})
+.then(response => response.text())
+.then(text => {
+    // display the text in the HTML page
+    document.querySelector('#my-element').textContent = text;
+}); -->

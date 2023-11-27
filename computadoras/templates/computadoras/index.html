@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center gap-3">
+        <div class="d-flex align-items-center  gap-3">
+            <a href="{% url 'computadoras:scan' %}" class="btn btn-outline-primary btn-sm">Escanear</a>
+            {% include 'includes/computadoras/search.html' %}
+        </div>
+        
+        <div class="d-flex align-items-center  gap-3">
+        {% include "includes/computadoras/pagination.html" with objs=comps %}
+        <div class="border border-primary rounded-circle cant  d-flex justify-content-center align-items-center">
+            <span>{{comps.count}}</span>
+        </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between gap-5 row-gap-3 flex-wrap my-4" id="comps">
+        {% for item in comps %}
+        {% include 'includes/computadoras/card.html' with item=item %}
+        {% endfor %}
+    </div>
+    <div class="position-fixed bottom-0 start-0 rounded-circle bg-warning d-flex justify-content-center align-items-center fs-4 ms-3 mb-3"
+        style="width: 2rem; height: 2rem;">
+        <a href="#" class="text-light" onclick="scrollTop()">
+            <i class="bi bi-arrow-up-circle"></i>
+        </a>
+    </div>
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'computadoras/js/pagination.js' %}"></script>
+
+<script>
+    function scrollTop() {
+        window.scroll({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
+    // let comps = document.getElementById("comps");
+    // console.log(comps);
+    function incomplete() {
+        let comps = document.querySelectorAll("#comps .card");
+        let complete = true
+        for (let i = 0; i < comps.length; i++) {
+
+            let resp = document.getElementById("resp-" + i.toString());
+            let name = document.getElementById("name-" + i.toString());
+
+            let ip = document.getElementById("ip-" + i.toString());
+            let inv = document.getElementById("inv-" + i.toString());
+            let s1 = document.getElementById("s1-" + i.toString());
+            let s2 = document.getElementById("s2-" + i.toString());
+
+            console.log(resp.textContent, name.textContent, ip.textContent, inv.textContent, s1.textContent, s2.textContent);
+
+            if (ip.textContent == "None" || resp.textContent == "None" || name.textContent == "None") {
+                complete = false;
+            }
+
+            if (inv.textContent == "None" || s1.textContent == "None" || s2.textContent == "None") {
+                complete = false;
+            }
+
+            let comp = document.getElementById("comp-" + i.toString())
+
+            if (complete) {
+                if (comp.classList.contains("border-danger")) {
+                    comp.classList.remove("border-danger")
+                }
+            } else {
+                if (!comp.classList.contains("border-danger")) {
+                    comp.classList.add("border-danger")
+                }
+            }
+            complete = true
+        }
+    }
+    incomplete();
+
+    function showSearchForm() {
+        let boton = document.getElementById("lupa");
+        let form = document.getElementById("search-form");
+        if (form.classList.contains("d-none")) {
+            
+            form.classList.remove("d-none");
+        } else {
+            form.classList.add("d-none");
+            
+        }
+        // boton.classList.add("d-none");
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="border border-2 rounded p-4 w-25">
+        <h5 class="text-center">Iniciar sesión</h5>
+        <hr>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-2">
+                <label for="{{form.username.id_for_label}}" class="form-label">Usuario:</label>
+                {{form.username}}
+            </div>
+            <div class="mb-3">
+                <label for="{{form.username.id_for_label}}" class="form-label">Contraseña:</label>
+                {{form.password}}
+            </div>
+            <div class="mb-2">
+                <input type="submit" value="Iniciar sesión" class="btn btn-outline-dark">
+            </div>
+            <div class="mb-2">
+                {% if form.errors %}
+                <p>El usuario o contraseña está mal.</p>
+                {% endif %}
+            </div>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    let inp = document.querySelectorAll('input');
+    inp.forEach(element => {
+        element.classList.add('form-control');
+    });
+</script>
+{% endblock %}

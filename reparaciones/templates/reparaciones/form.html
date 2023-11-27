@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-12 col-sm-3 ">
+        <h5 class="mb-3">Informáticos</h5>
+        <div class="d-flex flex-wrap mb-3">
+            {% for i in trabs %}
+            <button class="btn btn-outline-primary btn-sm m-1" onclick="selectWorker('{{i.pk}}')">{{i.nombre}}</button>
+            {% endfor %}
+        </div>
+        
+    </div>
+    <div class="col-12 col-sm-4 offset-sm-1 fform">
+        <form action="" method="post" class="position-relative">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+            <a href="{% url 'reparaciones:index' %}" class="btn-close"></a>
+            <div class="input-group input-group-sm w-50">
+                <div class="input-group-text" id="btnGroupAddon2"><i class="bi bi-pc-display"></i></div>
+                <input type="text" class="form-control form-control-sm" id="resp"
+                aria-label="Nombre de la computadora" aria-describedby="btnGroupAddon2" 
+                {% if comp.nombre %}
+                placeholder="{{comp|first}}"
+                {% else %}
+                placeholder="Computadora"
+                {% endif %}
+                >
+            </div>
+            </div>
+
+            {% for f in form %}
+            <div class="mb-2">
+                {{f.errors}}
+                <label for="{{f.id_for_label}}">{{f.label_tag}}</label>
+                {{f}}
+            </div>
+            {% endfor %}
+            <input type="submit" value="Guardar" class="btn btn-outline-primary" name="save">
+            {% if editing %}
+            <input type="submit" value="Eliminar" class="btn btn-outline-danger" name="dele">
+            {% endif %}
+            <div class="searcher shadow bg-light d-none" id="searcher">
+                <ul class="list-group list-group-flush list-results">
+                    {% for i in comp %}
+                    <a href="#" class="list-group-item" onclick="passIt('{{i.pk}}', '{{i.nombre}}', 'id_recurso')">{{i.nombre}}</a>
+                    {% empty %}
+                    <li class="list-group-item">---</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'computadoras/js/trab_x_comp.js' %}"></script>
+<script>
+    function selectWorker(nombre) {
+        document.getElementById("id_tenico").value = nombre;
+    }
+</script>
+{% endblock %}

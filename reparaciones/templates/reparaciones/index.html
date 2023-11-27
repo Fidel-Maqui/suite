@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <a class="btn btn-outline-primary" href="{% url 'reparaciones:add' %}">Agregar</a>
+    {% include 'includes/computadoras/pagination.html' with objs=items %}
+</div>
+<div class="table-responsive w-75 mx-auto mt-3">
+    <table class="table table-hover table-bordered bg-light text-center">
+        <thead>
+            <tr>
+                <th colspan="8" class="text-center">
+                    Reparaciones
+                </th>
+            </tr>
+            <tr>
+                <th>Recurso</th>
+                <th>Sello 1</th>
+                <th>Sello 2</th>
+                <th>Técnico</th>
+                <th>Descripción</th>
+                <th>Modificado</th>
+                <th>Creado</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody  id="comps">
+            {% for p in items %}
+            <tr class="fel">
+                <td>{{p.recurso}}</td>
+                <td>{{p.sello_1}}</td>
+                <td>{{p.sello_2}}</td>
+                <td>{{p.tenico}}</td>
+                <td>{{p.descripcion}}</td>
+                <td>{{p.modified}}</td>
+                <td>{{p.created}}</td>
+                <td class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'reparaciones:upd' p.pk %}" title="Editar registro de reparación"><i
+                            class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'reparaciones:dele' p.pk %}" title="Eliminar registro de reparación"><i
+                            class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'computadoras/js/pagination.js' %}"></script>
+{% endblock script %}
+
+    

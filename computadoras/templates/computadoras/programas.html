@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-between mb-5">
+
+    <div class="d-flex gap-3">
+        <a href="{% url 'computadoras:form_prog' %}" class="btn btn-outline-primary">Programas</a>
+        <a href="{% url 'computadoras:scan_prog' %}" class="btn btn-outline-primary">Escanear</a>
+    </div>
+    <div class="d-flex gap-2">
+        <select name="data" id="data" class="form-control data-select">
+            {% for p in progs %}
+            <option value="{{p.pk}}">{{p.nombre}}</option>
+            {% endfor %}
+        </select>
+        <input type="button" name="buscar" value="Buscar" class="btn btn-outline-primary btn-sm" id="btnSearch">
+        <input type="button" name="todos" value="Todos" class="btn btn-outline-primary btn-sm" id="btnShowAll">
+    </div>
+
+</div>
+<div class="d-flex justify-content-center" id="detalles">
+    <div class="table-responsive table-responsive ftab bg-light shadow mb-5 w-75">
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th colspan="4">
+                        Programas: <span id="cantRows"></span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>Programas</th>
+                    <th>Computadoras</th>
+                    <th>IP</th>
+                    <th>Responsables</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in softs %}
+                <tr prog="{{p.nombre.pk}}">
+                    <td>{{p.nombre}}</td>
+                    <td>{{p.computadora}}</td>
+                    <td>{{p.computadora.ip}}</td>
+                    {% if p.computadora.responsable %}
+                    <td>{{p.computadora.responsable}}</td>
+                    {% else %}
+                    <td>Desconocido</td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>----</td>
+                    <td>----</td>
+                    <td>----</td>
+                    <td>----</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+    // let data = document.getElementById("data");
+    // data.value = {{data}};
+    let btnSearch = document.getElementById("btnSearch");
+    let data = document.getElementById("data");
+    let btnShowAll = document.getElementById("btnShowAll");
+    let rows = document.querySelectorAll("table tbody tr");
+    countRows();
+
+    btnShowAll.addEventListener("click", ShowAll)
+    btnSearch.addEventListener("click", searchCompsByProgram)
+    function searchCompsByProgram() {
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].getAttribute("prog") == data.value) {
+                if (rows[i].classList.contains("d-none")) {
+                    rows[i].classList.remove("d-none")
+                }
+            } else {
+                if (!rows[i].classList.contains("d-none")) {
+                    rows[i].classList.add("d-none")
+                }
+            }
+        }
+        countRows();
+    }
+
+    function countRows() {
+        let cantRows = 0
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].getAttribute("prog") && !rows[i].classList.contains("d-none")) {
+                cantRows++;
+            }
+        }
+        document.getElementById("cantRows").textContent = cantRows.toString();
+    }
+    function ShowAll() {
+        for (let i = 0; i < rows.length; i++) {
+            if (rows[i].classList.contains("d-none")) {
+                rows[i].classList.remove("d-none")
+            }
+        }
+        countRows();
+    }
+</script>
+{% endblock %}

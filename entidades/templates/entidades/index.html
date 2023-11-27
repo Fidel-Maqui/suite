@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+
+    <div class="col rounded-3 shadow mx-4 f-entities" id="areas">
+        <div class="ent-header">
+            <span class="fs-4">Áreas:&ThinSpace;<span id="filtered"></span>{{l_area.count}}</span>
+
+            <a class="fs-4 text-light" href="#" title="Ver todas las areas" onclick="mostrarAll()"><i
+                    class="bi bi-arrow-counterclockwise"></i></a>
+        </div>
+        <div class="ent-body  p-2">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Trabajadores</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for area in l_area %}
+                    <tr class="area">
+                        <td>{{area.nombre}}</td>
+                        <td>{{area.cant_trabs}}</td>
+
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary rounded-circle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu p-2 opt">
+                                    <li>
+                                        <a class="btn btn-secondary w-100" href="{% url 'entidades:updA' area.pk %}"
+                                            title="Editar área"><i class="bi bi-pencil-square"></i>
+                                            <span>Editar área</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-secondary w-100" href="{% url 'entidades:dele' area.pk 2 %}"
+                                            title="Borrar área"><i class="bi bi-trash"></i>
+                                            <span>Eliminar área</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-secondary w-100" href="{% url 'entidades:addT' area.pk %}"
+                                            title="Agregar trabajador"><i class="bi bi-person-plus"></i>
+                                            <span>Agregar trabajador</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-secondary w-100"
+                                            href="{% url 'entidades:trabxarea' area.pk %}" title="Ver trabajadores"><i
+                                                class="bi bi-person-workspace"></i>
+                                            <span>Ver trabajadores</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-secondary w-100"
+                                            href="{% url 'computadoras:verC_area' area.pk %}"
+                                            title="Ver computadoras"><i class="bi bi-pc-display"></i>
+                                            <span>Ver computadoras</span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+    function mostrarAll() {
+        let areas = document.getElementById("areas");
+        let elems = areas.querySelectorAll(".ent-body .area");
+        for (let i = 0; i < elems.length; i++) {
+            if (elems[i].classList.contains('d-none')) {
+                elems[i].classList.remove('d-none');
+            }
+        }
+        document.getElementById("filtered").textContent = "";
+
+    }
+    function filtrar(attr) {
+        mostrarAll();
+        let areas = document.getElementById("areas");
+        let elems = areas.querySelectorAll(".ent-body .area");
+        let cont = 0;
+        for (let i = 0; i < elems.length; i++) {
+            if (elems[i].getAttribute("ueb") != attr) {
+                elems[i].classList.add('d-none');
+            }
+            else {
+                cont += 1;
+            }
+        }
+        document.getElementById("filtered").textContent = cont.toString() + '/';
+    }
+</script>
+{% endblock %}

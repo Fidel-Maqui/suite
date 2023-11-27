@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-12 col-sm-4 offset-sm-4 fform">
+    <form method="post" >
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for f in form %}
+        <div class="mb-3">
+            <label for="{{f.id_for_label}}" class="form-label">{{f.label}}:</label>
+            {{f}}
+        </div>
+        {% endfor %}
+        <div class="d-flex justify-content-center">
+            {% if back %}
+            <a href="{% url 'printers:index' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            {% else %}
+            <a href="{% url 'printers:list_printer' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            {% endif %}
+            <input type="submit" value="Guardar" name="save" class="btn btn-outline-secondary">
+        </div>
+    </form>
+</div>
+{% endblock %}

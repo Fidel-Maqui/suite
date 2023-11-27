@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="btn-toolbar justify-content-between mb-5" role="toolbar" aria-label="Posibles responsables">
+    <div class="btn-group btn-group-sm" role="group" aria-label="First group">
+        <a href="{% url 'entidades:index' %}" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i></a>
+
+    </div>
+
+    <div class="d-flex gap-3">
+        {% include "includes/computadoras/pagination.html" with objs=l_trabs %}
+        <div class="input-group input-group-sm ">
+            <div class="input-group-text" id="btnGroupAddon2"><i class="bi bi-person"></i></div>
+            <input type="text" class="form-control form-control-sm" id="search_input" aria-label="Nombre del trabajador"
+                aria-describedby="btnGroupAddon2" placeholder="Trabajador">
+        </div>
+    </div>
+
+</div>
+<div class="d-flex justify-content-center">
+    <div class="w-50 rounded-3 shadow mx-4 f-entities ">
+        <div class="ent-header">
+            <span class="fs-4">Trabajadores: <span id="cantTrabs"></span></span>
+
+        </div>
+        <div class="ent-body p-2">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Área</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody id="comps">
+                    {% for i in l_trabs %}
+                    <tr class="fel">
+                        <td>{{i.nombre}}</td>
+                        <td>{{i.area}}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary rounded-circle" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-three-dots-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu p-2 opt">
+                                    <li>
+                                        <a class="btn btn-secondary w-100" href="{% url 'entidades:updT' i.pk %}"
+                                            title="Editar trabajador"><i class="bi bi-pencil-square"></i>
+                                            <span>Editar trabajador</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-secondary w-100" href="{% url 'entidades:dele' i.pk 3 %}"
+                                            title="Borrar trabajador"><i class="bi bi-trash"></i>
+                                            <span>Eliminar trabajador</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-secondary w-100" href="{% url 'computadoras:verC' i.pk %}"
+                                            title="Ver computadora"><i class="bi bi-pc-display"></i>
+                                            <span>Ver computadora</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'computadoras/js/pagination.js' %}"></script>
+<script src="{% static 'computadoras/js/search_trab.js' %}"></script>
+{% endblock %}

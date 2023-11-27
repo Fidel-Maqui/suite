@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="form-page">
+    <div class="fform">
+        <form method="post">
+            <div class="d-flex mb-3">
+                <a href="{% url 'entidades:trabs' %}" class="btn-close" title="Atras"></a>
+            </div>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-3">
+                <label for="{{form.nombre.id_for_label}}" class="form-label">{{form.nombre.label}}:</label>
+                {{form.nombre}}
+            </div>
+            <div class="mb-3">
+                <label for="{{form.cargo.id_for_label}}" class="form-label">{{form.cargo.label}}:</label>
+                {{form.cargo}}
+            </div>
+            {% if editing %}
+            <div class="mb-3">
+                {% else %}
+                <div class="mb-3 hidden">
+                    {% endif %}
+                    <label for="{{form.cargo.id_for_label}}" class="form-label">{{form.area.label}}:</label>
+                    {{form.area}}
+                </div>
+                {% if data %}
+                <div class="hstack mb-2">
+                    {% if area %}
+                    <a class="fs-3" href="{% url 'entidades:setHead' data.pk 0 %}" title="Ya es responsable de area"><i
+                            class="bi bi-diagram-2-fill"></i></a>
+                    {% else %}
+                    <a class="fs-3" href="{% url 'entidades:setHead' data.pk 0 %}" title="Hacer responsable de area"><i
+                            class="bi bi-diagram-2"></i></a>
+                    {% endif %}
+
+                    {% comment %}
+                    # updueb
+                    {% endcomment %}
+
+                    <a class="fs-3 ms-auto" href="{% url 'entidades:setHead' data.pk 1 %}"
+                        title="Ya es responsable de ueb"><i class="bi bi-diagram-3-fill"></i></a>
+                    {% else %}
+                    <a class="fs-3 ms-auto" href="{% url 'entidades:setHead' data.pk 1 %}"
+                        title="Hacer responsable de ueb"><i class="bi bi-diagram-3"></i></a>
+
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-center">
+                    <input type="submit" value="Guardar" name="save" class="btn btn-outline-secondary">
+                </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

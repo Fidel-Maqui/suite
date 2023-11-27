@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-12 col-sm-4 offset-sm-4 fform">
+    <form method="post">
+        {% csrf_token %}
+        <h4 class="text-center">¿Seguro que desea borrar el elemento: {{data}}?</h4>
+        
+        {% if ent == 2 %}
+        <h5 class="text-center">Si elimina esta área, se perderán todos sus trabajadores.</h5>
+        {% endif %}
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'entidades:index' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            <input type="submit" value="Eliminar" name="delete" class="btn btn-outline-danger">
+        </div>
+    </form>
+    {% endblock %}

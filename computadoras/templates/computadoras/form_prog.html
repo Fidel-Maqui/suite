@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-between mb-5">
+    <a href="{% url 'computadoras:programas' %}" class="fs-4">
+        <i class="bi bi-arrow-left-square"></i>
+    </a>
+    <form class="d-flex justify-content-between gap-2" method="post">
+        {% csrf_token %}
+                {{form.nombre}}
+            {% if editing %}
+            <input type="submit" value="Editar" class="btn btn-outline-primary" name="upd">
+            <input type="submit" value="Eliminar" class="btn btn-outline-danger" name="dele">
+            {% else %}
+            <input type="submit" value="Guardar" class="btn btn-outline-primary" name="save">
+        {% endif %}
+    </div>
+    </form>
+
+</div>
+<div class="d-flex justify-content-center" id="detalles">
+        <div class="table-responsive w-25 bg-light shadow">
+            <table class="table table-hover bg-light text-center">
+                <thead>
+                    <tr>
+                        <th colspan="4" class="text-center">
+                            Programas: {{progs.count}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Programas</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in progs %}
+                    <tr>
+                        <td>{{p.nombre}}</td>
+                        <td><a href="{% url 'computadoras:upd_soft' p.pk %}" title="Editar pieza"><i
+                            class="bi bi-pencil-square"></i></a></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td>----</td>
+                        <td>----</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
+
+
+{% endblock %}
+<div class="input-group">
+    <div class="input-group-text" id="btnGroupAddon2">@</div>
+    <input type="text" class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon2">
+  </div>

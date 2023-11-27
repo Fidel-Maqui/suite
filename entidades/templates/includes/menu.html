@@ -1,0 +1,6 @@
+<div class="container-fluid d-flex justify-content-end gap-4 mb-3">
+    <a href="{% url 'entidades:areas' %}"
+        class="btn {% if request.path == '/areas/' %} btn-secondary {% else %} btn-outline-secondary {% endif %} ">Áreas</a>
+    <a href="{% url 'entidades:workers' %}"
+        class="btn {% if request.path == '/workers/' %} btn-secondary {% else %} btn-outline-secondary {% endif %} ">Trabajadores</a>
+</div>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ title }}</title>
+        <style type="text/css">
+            body{
+                font-size: 13px;
+            }
+            table {
+                text-align: left;
+                padding: 2px 0px -2px 2px;
+            }
+            img {
+                width: 70px;
+                height: 40px;
+                text-align: left;
+                padding-left: -25px;
+            }
+            thead tr{
+                background-color: #bebebe; width: 100%;
+            }
+            span{
+                padding-bottom: -18px;
+                text-align: left;
+            }
+            h2{
+                padding-bottom: -18px;
+                text-align: center;
+            }
+
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td style="width: 45%;"><img src="{{ logo }}" alt="" /></td>
+                <td style="width: 55%; color: #808080;"><span><em>{{ empresa }}</em></span></td>
+            </tr>
+        </table>
+        <h2 style="margin-top: 25px;">Ficha Técnica</h2>
+
+        <table border="0">
+            <thead>
+                <tr>
+                    <td colspan="4"><h4><strong>DETALLES DEL RECURSO</strong></h4></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width: 25%;"><b>No. Inventario:</b></td>
+                    <td style="width: 25%;">{{ detalle.num_de_inventario }}</td>
+                    <td style="width: 25%;"><b>Recurso:</b></td>
+                    <td style="width: 25%;">{{ detalle.nombre }}</td>
+                </tr>
+                <tr>
+                    <td style="width: 25%;"><b>IP:</b></td>
+                    <td style="width: 25%;">{{ detalle.ip }}</td>
+                    <td style="width: 25%;"><b>Números de sellos:</b></td>
+                    <td style="width: 25%;">{{ detalle.sello_1 }} {{detalle.sello_2}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 25%;"><b>Área:</b></td>
+                    <td style="width: 25%;">{{ detalle.responsable.area }}</td>
+                    <td style="width: 25%;"><b>Responsable:</b></td>
+                    <td style="width: 25%;">{{detalle.responsable}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table border="0" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <td colspan="6"><h4><strong>COMPONENTES INTERNOS</strong></h4></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width: 16%;"><b>Nombre</b></td>
+                    <td style="width: 16%;"><b>Fabricante</b></td>
+                    <td style="width: 16%;"><b>Modelo</b></td>
+                    <td style="width: 16%;"><b>Capacidad</b></td>
+                    <td style="width: 16%;"><b>Velocidad</b></td>
+                    <td style="width: 16%;"><b>No. de Serie</b></td>
+                </tr>
+                {% for componentes_internos in componente_interno %}
+                <tr>
+                    <td style="width: 16.6%;">{{ componentes_internos.nombre }}</td>
+                    <td style="width: 16.6%;">{{ componentes_internos.fabricante }}</td>
+                    <td style="width: 21.6%;">{{ componentes_internos.modelo }}</td>
+                    <td style="width: 11.6%;">{{ componentes_internos.capacidad_gb }}</td>
+                    <td style="width: 11.7%;">{{ componentes_internos.velocidad }}</td>
+                    <td style="width: 21.7%;">{{ componentes_internos.num_de_serie }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table border="0" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <td colspan="5"><h4><strong>COMPONENTES EXTERNOS</strong></h4></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="width: 20%;"><b>Nombre</b></td>
+                    <td style="width: 20%;"><b>Fabricante</b></td>
+                    <td style="width: 20%;"><b>Modelo</b></td>
+                    <td style="width: 16%;"><b>No. de inventario</b></td>
+                    <td style="width: 24%;"><b>No. de serie</b></td>
+                </tr>
+                {% for componentes_externos in componente_externo %}
+                <tr>
+                    <td style="width: 20%;">{{ componentes_externos.nombre }}</td>
+                    <td style="width: 20%;">{{ componentes_externos.fabricante }}</td>
+                    <td style="width: 20%;">{{ componentes_externos.modelo }}</td>
+                    <td style="width: 16%;">{{ componentes_externos.num_inventario }}</td>
+                    <td style="width: 24%;">{{ componentes_externos.num_de_serie }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table style="margin-top: 100px; text-align: center;">
+            <tr>
+                <td style="width: 33.3%;">________________________</td>
+                <td style="width: 33.3%;">________________________</td>
+                <td style="width: 33.3%;">________________________</td>
+            </tr>
+            <tr>
+                <td style="width: 33.3%;">{{ aprobador }}</td>
+                <td style="width: 33.3%;">{{ responsable_seg }}</td>
+                <td style="width: 33.3%;">{{ responsable_tec }}</td>
+            </tr>
+            <tr>
+                <td style="width: 33.3%;"><b>Aprobador</b></td>
+                <td style="width: 33.3%;"><b>Responsable Seg. Inf</b></td>
+                <td style="width: 33.3%;"><b>Responsable Tecnología</b></td>
+            </tr>
+        </table>
+    </body>
+</html>

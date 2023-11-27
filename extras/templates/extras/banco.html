@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <a class="btn btn-outline-primary" href="{% url 'extras:addProblema' %}">Agregar</a>
+    {% include 'includes/computadoras/pagination.html' with objs=items %}
+</div>
+<div class="table-responsive w-75 mx-auto mt-3">
+    <table class="table table-hover table-bordered bg-light text-center">
+        <thead>
+            <tr>
+                <th colspan="3" class="text-center">
+                    Banco de Problemas
+                </th>
+            </tr>
+            <tr>
+                <th>Responsable</th>
+                <th>Descripción</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in items %}
+            <tr>
+                <td>{{p.responsable}}</td>
+                <td>{{p.description}}</td>
+                <td class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'extras:updProblema' p.pk %}" title="Editar registro de problema"><i
+                            class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'extras:delProblema' p.pk %}" title="Eliminar registro de problema" id="item{{forloop.counter}}"
+                    onclick="confirmForm(event, 'item{{forloop.counter}}')"><i
+                            class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="form-page">
+    <div class="fform">
+    <!-- <div class="col-12 col-sm-4 offset-sm-4 fform"> -->
+        <form action="" method="post">
+            <div class="d-flex mb-3">
+            <a href="{% url 'computadoras:detalles' c %}" type="button" class="btn-close" title="Atras"></a>
+        </div>
+            {% csrf_token %}
+            {% for f in form %}
+            <div class="mb-3">
+                {{f.errors}}
+                <label for="{{f.id_for_label}}">{{f.label_tag}}</label>
+                {{f}}
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-center gap-2">
+            <input type="submit" value="Guardar" class="btn btn-outline-primary" name="upd">
+            {% if editing %}
+            <a href="{% url 'computadoras:delc' comp.pk 4 %}" class="btn btn-outline-danger">Eliminar</a>
+            {% endif %}
+        </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

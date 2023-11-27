@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+    <a class="btn btn-outline-primary" href="{% url 'printers:add_conn' %}">Agregar</a>
+    <a class="btn btn-outline-primary" href="{% url 'printers:list_printer' %}">Tipos de impresoras</a>
+</div>
+{% include 'includes/computadoras/pagination.html' with objs=items %}
+<div class="table-responsive w-75 mx-auto mt-3">
+    <table class="table table-hover table-bordered bg-light text-center">
+        <thead>
+            <tr>
+                <th colspan="5" >
+                    Reparaciones
+                </th>
+            </tr>
+            <tr>
+                <th>Responsable</th>
+                <th>Impresora</th>
+                <th>Toner</th>
+                <th># de inv</th>
+                <th># de serial</th>
+                <th>Opciones</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in items %}
+            <tr>
+              
+                <td>{{p.owner}}</td>
+                <td>{{p.printer}}</td>
+                <td>{{p.printer.toner}}</td>
+                <td>{{p.inv}}</td>
+                <td>{{p.serial}}</td>
+                <td class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'printers:upd_conn' p.pk %}" title="Editar impresora"><i
+                            class="bi bi-pencil-square"></i></a>
+                    <a href="{% url 'printers:del_conn' p.pk %}" title="Eliminar impresora"><i
+                            class="bi bi-trash"></i></a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+                <td>----</td>
+           
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% include 'includes/computadoras/pagination.html' with objs=items %}
+{% endblock %}

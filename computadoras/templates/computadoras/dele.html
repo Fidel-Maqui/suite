@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="form-page">
+    <div class=" fform">
+        <form method="post">
+            {% csrf_token %}
+            <h4 class="text-center">¿Seguro que desea borrar el elemento: {{data}}?</h4>
+            <div class="d-flex justify-content-center">
+                {% if ent == 1 %}
+                <a href="{% url 'computadoras:upd_comp' data.id %}" class="btn btn-outline-secondary me-3">Volver</a>
+                {% elif ent >= 2 %}
+                <a href="{% url 'computadoras:detalles' data.computadora.id %}" class="btn btn-outline-secondary me-3">Volver</a>
+                {% endif %}                     
+                <input type="submit" value="Eliminar" name="delete" class="btn btn-outline-danger">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

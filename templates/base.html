@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suite</title>
+
+  <link rel="shortcut icon" href="{% static 'computadoras/img/logo2.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'computadoras/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'computadoras/icons/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'computadoras/style.css' %}">
+  <!-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script> -->
+
+  <!-- <script src="{% static 'computadoras/js/jsPDF/dist/jspdf.umd.js' %}"></script> -->
+</head>
+
+<body class="  bg-light">
+
+  <nav class="navbar navbar-expand-xl fixed-top fmenu">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" href="{% url 'computadoras:index' %}">
+          <img src="{% static 'computadoras/img/logo4.png' %}" alt="" width="52" height="30"
+            class="d-inline-block align-text-top">
+        </a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'entidades:index' %}">Areas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'entidades:trabs' %}">Trabajadores</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{% url 'computadoras:index' %}">Computadoras</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'reparaciones:index' %}">Reparaciones</a>
+          </li>
+          <li class="nav-item">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Extras
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="{% url 'computadoras:programas' %}">Programas</a></li>
+              <li><a class="dropdown-item" href="{% url 'printers:index' %}">Impresoras</a></li>
+              <li><a class="dropdown-item" href="{% url 'printers:index' %}">Cambios</a></li>
+              <li><a class="dropdown-item" href="{% url 'extras:banco' %}">Banco de problemas</a></li>
+              <li><a class="dropdown-item" href="{% url 'printers:index' %}">Baja</a></li>
+            </ul>
+          </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'salva:index' %}">Salva</a>
+          </li>
+        </ul>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-light" id="notifica">
+            <i class="bi bi-person-circle" id="icon"></i>
+            <span class="badge rounded-pill d-none" id="count"></span>
+            <span class="ms-1">{{user|title}}</span>
+          </button>
+          <button type="button" class="btn btn-outline-light dropdown-toggle dropdown-toggle-split"
+            data-bs-toggle="dropdown" aria-expanded="false" data-bs-theme="dark">
+            <span class="visually-hidden">Notificaciones</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 8rem;"
+            data-bs-popper="static">
+            <!-- <ul class="dropdown-menu dropdown-menu-end show"> -->
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item text-dark" href="{% url 'password_change' %}">Cambiar contraseña</a></li>
+            <li><a class="dropdown-item text-dark" href="{% url 'logout' %}">Cerrar Sesión</a></li>
+            {% else %}
+            <li><a class="dropdown-item text-dark" href="{% url 'login' %}">Iniciar Sesión</a></li>
+            {% endif %}
+            <li>
+              <a class="dropdown-item text-dark" href="{% url 'admin:index' %}" target="_blank">Admin</a>
+            </li>
+
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </nav>
+  <div class="content">
+    <div class="container-fluid wrapper">
+      <!-- <div class="position-fixed bottom-0 end-0 p-3">
+          <button type="button" class="btn btn-outline-primary rounded-circle position-relative d-none" id="liveToastBtn">
+              <i class="bi bi-bell"></i>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="count"></span>
+              </button>
+      </div> -->
+      <div class="toast-container position-fixed bottom-0 end-0 p-3 overflow-auto" style="max-height: 10rem;" id="msgs">
+
+        {% if messages %}
+
+        {% for message in messages %}
+
+
+        {% if message.tags == "success" %}
+
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
+          <div class="toast-header bg-success text-white">
+            <i class="rounded me-2 bi bi-bell"></i>
+            <strong class="me-auto">Notificación</strong>
+            <small>ahora</small>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body bg-light fs-5">
+            {{message|capfirst }}
+          </div>
+        </div>
+        {% elif message.tags == "error" %}
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
+          <div class="toast-header bg-danger text-white">
+            <i class="rounded me-2 bi bi-bell"></i>
+
+            <strong class="me-auto">Notificación</strong>
+            <small>ahora</small>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body bg-light fs-5">
+            {{message|capfirst }}
+          </div>
+        </div>
+        {% elif message.tags == "warning" %}
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
+          <div class="toast-header bg-warning text-white">
+            <i class="rounded me-2 bi bi-bell"></i>
+
+            <strong class="me-auto">Notificación</strong>
+            <small>ahora</small>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body bg-light fs-5">
+            {{message|capfirst }}
+          </div>
+        </div>
+        {% endif %} {% endfor %} {% endif %}
+      </div>
+
+      <div class="container-fluid wrapper">
+        {% block content %}
+        {% endblock %}
+      </div>
+
+      <div
+        class="border border-2 border-primary shadow rounded-2 position-absolute top-50 start-50 translate-middle bg-light w-50 p-4 d-none"
+        id="delform">
+        <h5 class="header text-center">Seguro que desea eliminar este elemento?</h5>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="#" class="btn btn-outline-primary btn-sm" id="aqui">Aceptar</a>
+          <button type="button" class="btn btn-outline-danger btn-sm" onclick="toggleDelForm()">Cancelar</button>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="{% static 'computadoras/js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+      function toggleDelForm() {
+        let form = document.getElementById("delform");
+        if (form.classList.contains("d-none")) {
+          form.classList.remove("d-none");
+        }
+        else {
+          form.classList.add("d-none");
+        }
+      }
+      function confirmForm(event, id) {
+        event.preventDefault();
+        console.log(id);
+        let link = document.getElementById(id);
+        console.log(link);
+        console.log(link.href);
+        document.getElementById("aqui").setAttribute("href", link.href)
+        toggleDelForm();
+      }
+    </script>
+    <script>
+
+      const toastTrigger1 = document.getElementById('notifica')
+      // const toastTrigger1 = document.getElementById('liveToastBtn')
+      const toastLiveExample = document.querySelectorAll('#liveToast')
+      if (toastTrigger1) {
+        toastTrigger1.addEventListener('click', () => {
+          toastLiveExample.forEach(element => {
+            let toast1 = new bootstrap.Toast(element)
+
+            toast1.show()
+
+          });
+        })
+      }
+
+      let cant = document.querySelectorAll("#msgs > div.toast");
+      // console.log(cant.length);
+      if (cant.length > 0) {
+        let count = document.getElementById("count");
+        let icon = document.getElementById("icon");
+        count.textContent = cant.length;
+        count.classList.remove("d-none");
+
+        if (cant.length == 1) {
+          // console.log(cant[0].children[0])
+          if (cant[0].children[0].classList.contains("bg-success")) {
+            count.classList.add("bg-success");
+          }
+          else {
+            count.classList.add("bg-danger");
+          }
+        } else {
+          count.classList.add("bg-danger");
+        }
+        icon.classList.add("d-none");
+        // toastTrigger1.classList.remove("d-none");
+      }
+    </script>
+    {% block script %}
+    {% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="col-12 col-sm-4 offset-sm-4 fform">
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <h5 class="text-center">¿Seguro que desea eliminar este elemento?</h5>
+        <div>
+            <h6 class="text-center">{{item}}</h6>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            {% if back %}
+            <a href="{% url 'printers:index' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            {% else %}
+            <a href="{% url 'printers:list_printer' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            {% endif %}
+            <input type="submit" value="Eliminar" class="btn btn-outline-danger" name="dele">
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

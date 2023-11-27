@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="form-page">
+    <div class="fform">
+        <form action="" method="post" class="position-relative">
+            {% csrf_token %}
+            <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Posibles responsables">
+                <div class="btn-group btn-group-sm" role="group" aria-label="First group">
+                    <a href="{% url 'computadoras:detalles' comp.pk %}" type="button" class="btn-close" title="Atras"></a>
+                </div>
+                <div class="input-group input-group-sm ">
+                    <div class="input-group-text" id="btnGroupAddon2"><i class="bi bi-person"></i></div>
+                    <input type="text" class="form-control form-control-sm" id="resp"
+                    aria-label="Nombre del responsable" aria-describedby="btnGroupAddon2" 
+                    {% if comp.responsable %}
+                    placeholder="{{comp.responsable}}"
+                    {% else %}
+                    placeholder="Responsable"
+                    {% endif %}
+                    >
+                </div>
+            </div>
+            <div class="mb-2 text-end">
+                {{form.responsable.errors}}
+                {{form.responsable}}
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    {{form.nombre.errors}}
+                    <label for="{{form.nombre.id_for_label}}">{{form.nombre.label_tag}}</label>
+                    {{form.nombre}}
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-6">
+                    {{form.ip.errors}}
+                    <label for="{{form.ip.id_for_label}}">{{form.ip.label_tag}}</label>
+                    {{form.ip}}
+                </div>
+                <div class="col-6">
+                    {{form.num_de_inventario.errors}}
+                    <label for="{{form.num_de_inventario.id_for_label}}">{{form.num_de_inventario.label_tag}}</label>
+                    {{form.num_de_inventario}}
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                    {{form.sello_1.errors}}
+                    <label for="{{form.sello_1.id_for_label}}">{{form.sello_1.label_tag}}</label>
+                    {{form.sello_1}}
+                </div>
+                <div class="col-6">
+                    {{form.sello_2.errors}}
+                    <label for="{{form.sello_2.id_for_label}}">{{form.sello_2.label_tag}}</label>
+                    {{form.sello_2}}
+                </div>
+            </div>
+            <div class="d-flex justify-content-center gap-3">
+                <input type="submit" value="Guardar" class="btn btn-outline-primary" name="upd">
+            <a href="{% url 'computadoras:delc' comp.pk 1 %}" class="btn btn-outline-danger">Eliminar</a>
+
+            </div>
+
+            <div class="searcher shadow bg-light d-none" id="searcher">
+                <ul class="list-group list-group-flush list-results">
+                    {% for i in trabs %}
+                    <a href="#" class="list-group-item" onclick="passIt('{{i.pk}}', '{{i.nombre}}', 'id_responsable')">{{i.nombre}}</a>
+                    {% empty %}
+                    <li class="list-group-item">---</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block script %}
+<script src="{% static 'computadoras/js/trab_x_comp.js' %}"></script>
+
+{% endblock %}
