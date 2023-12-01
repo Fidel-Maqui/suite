@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="row">
+<div class="row pt-2">
 
-    <div class="col rounded-3 shadow mx-4 f-entities" id="areas">
+    <div class="col-6 mx-auto rounded-3 shadow mx-4 f-entities" id="areas">
         <div class="ent-header">
             <span class="fs-4">Áreas:&ThinSpace;<span id="filtered"></span>{{l_area.count}}</span>
 
             <a class="fs-4 text-light" href="#" title="Ver todas las areas" onclick="mostrarAll()"><i
                     class="bi bi-arrow-counterclockwise"></i></a>
         </div>
-        <div class="ent-body  p-2">
+        <div class="table-responsive ent-body  p-2">
             <table class="table text-center">
                 <thead>
                     <tr>
