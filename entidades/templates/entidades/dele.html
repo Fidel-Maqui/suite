@@ -10,7 +10,9 @@
         <h5 class="text-center">Si elimina esta área, se perderán todos sus trabajadores.</h5>
         {% endif %}
         <div class="d-flex justify-content-center">
-            <a href="{% url 'entidades:index' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            {% if ent == 3 %}
+            <a href="{% url 'entidades:trabs' %}" class="btn btn-outline-secondary me-3">Volver</a>
+            {% endif %}
             <input type="submit" value="Eliminar" name="delete" class="btn btn-outline-danger">
         </div>
     </form>

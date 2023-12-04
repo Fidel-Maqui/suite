@@ -34,31 +34,31 @@
                             </button>
                             <ul class="dropdown-menu p-2 opt">
                                 <li>
-                                    <a class="btn btn-secondary w-100" href="{% url 'entidades:updA' area.pk %}"
+                                    <a class="dropdown-item" href="{% url 'entidades:updA' area.pk %}"
                                         title="Editar área"><i class="bi bi-pencil-square"></i>
                                         <span>Editar área</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-secondary w-100" href="{% url 'entidades:dele' area.pk 2 %}"
+                                    <a class="dropdown-item" href="{% url 'entidades:dele' area.pk 2 %}"
                                         title="Borrar área"><i class="bi bi-trash"></i>
                                         <span>Eliminar área</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-secondary w-100" href="{% url 'entidades:addT' area.pk %}"
+                                    <a class="dropdown-item" href="{% url 'entidades:addT' area.pk %}"
                                         title="Agregar trabajador"><i class="bi bi-person-plus"></i>
                                         <span>Agregar trabajador</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-secondary w-100" href="{% url 'entidades:trabxarea' area.pk %}"
+                                    <a class="dropdown-item" href="{% url 'entidades:trabxarea' area.pk %}"
                                         title="Ver trabajadores"><i class="bi bi-person-workspace"></i>
                                         <span>Ver trabajadores</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-secondary w-100" href="{% url 'computadoras:verC_area' area.pk %}"
+                                    <a class="dropdown-item" href="{% url 'computadoras:verC_area' area.pk %}"
                                         title="Ver computadoras"><i class="bi bi-pc-display"></i>
                                         <span>Ver computadoras</span>
                                     </a>

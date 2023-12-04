@@ -34,6 +34,10 @@ def index(request):
 @login_required
 def trabs(request):
     l_trabs = Trabajador.objects.all()
+    if request.method == "GET":
+        if request.GET.get("buscar"):
+            fields = request.GET.get("fields")
+            l_trabs = l_trabs.filter(nombre__icontains=fields)
 
     diction = {
         'l_trabs': l_trabs, 'cant_trabs': l_trabs.count
