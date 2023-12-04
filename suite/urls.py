@@ -18,7 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include("computadoras.urls")),
-    path("unicorn/", include("django_unicorn.urls")),
     path('entidades/', include("entidades.urls")),
     path('reparaciones/', include("reparaciones.urls")),
     path('printers/', include("printers.urls")),
