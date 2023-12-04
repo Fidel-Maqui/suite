@@ -21,3 +21,5 @@ function showOneOfMany(parent_id, one_id) {
 
     }
 }
+
+export { addClass, remClass };

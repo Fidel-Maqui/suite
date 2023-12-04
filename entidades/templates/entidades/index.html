@@ -4,11 +4,13 @@
 <div class="row">
     <div class="col-12 col-sm-8 col-md-6 mx-auto">
         <table class="table table-bordered table-sm text-center ent-body">
-            <caption class="caption-top">
-                <div class="d-flex justify-content-between">
+            <caption class="caption-top py-0 my-3">
+                <div class="d-flex justify-content-between align-items-center">
                     <span>Áreas:&ThinSpace;<span id="filtered"></span>{{l_area.count}}</span>
-                    <button class="btn btn-outline-primary btn-sm" title="Ver todas las areas" onclick="mostrarAll()"><i
-                            class="bi bi-search"></i></button>
+
+            {% include 'includes/computadoras/search.html' with placeholder="Nombre del área" %}
+
+
                 </div>
             </caption>
             <thead>
@@ -25,7 +27,7 @@
                     <td>{{area.cant_trabs}}</td>
 
                     <td>
-                        <div class="{% if forloop.last %}dropup{% else %}dropdown{% endif %}">
+                        <div class="dropdown">
                             <button class="btn btn-outline-primary btn-sm" type="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 <i class="bi bi-three-dots-vertical"></i>
@@ -75,34 +77,4 @@
 
 </div>
 
-{% endblock %}
-{% block script %}
-<script>
-    function mostrarAll() {
-        let areas = document.getElementById("areas");
-        let elems = areas.querySelectorAll(".ent-body .area");
-        for (let i = 0; i < elems.length; i++) {
-            if (elems[i].classList.contains('d-none')) {
-                elems[i].classList.remove('d-none');
-            }
-        }
-        document.getElementById("filtered").textContent = "";
-
-    }
-    function filtrar(attr) {
-        mostrarAll();
-        let areas = document.getElementById("areas");
-        let elems = areas.querySelectorAll(".ent-body .area");
-        let cont = 0;
-        for (let i = 0; i < elems.length; i++) {
-            if (elems[i].getAttribute("ueb") != attr) {
-                elems[i].classList.add('d-none');
-            }
-            else {
-                cont += 1;
-            }
-        }
-        document.getElementById("filtered").textContent = cont.toString() + '/';
-    }
-</script>
 {% endblock %}

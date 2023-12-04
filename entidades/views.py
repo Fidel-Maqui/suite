@@ -16,7 +16,6 @@ def updArea():
         a.cant_trabs = utrab.count()
         a.save()
 
-
 @login_required
 def index(request):
     updArea()
